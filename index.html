@@ -2,134 +2,320 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Hyderabad Trip Countdown</title>
+  <title>Hyderabad Trip Countdown with Enhanced Animations</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
     body {
-      min-height: 100vh;
       margin: 0;
-      background: linear-gradient(135deg, #18171c 0%, #25264e 90%);
+      min-height: 100vh;
+      background: radial-gradient(ellipse at center, #0b1a2a 0%, #070b14 90%);
+      font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
       overflow: hidden;
+      position: relative;
+    }
+    /* Stars background for a night sky effect */
+    .stars {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      background: transparent;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .stars::before, .stars::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      box-shadow:
+        10vw 5vh white,
+        20vw 10vh white,
+        30vw 20vh white,
+        40vw 15vh white,
+        50vw 30vh white,
+        60vw 25vh white,
+        70vw 35vh white,
+        80vw 40vh white,
+        90vw 50vh white;
+      animation: twinkle 3s linear infinite alternate;
+      border-radius: 50%;
+      opacity: 0.8;
+    }
+    .stars::after {
+      width: 3px;
+      height: 3px;
+      top: 10vh;
+      left: 10vw;
+      box-shadow:
+        25vw 50vh white,
+        45vw 35vh white,
+        65vw 45vh white,
+        85vw 60vh white,
+        15vw 60vh white;
+      animation-delay: 1.5s;
+    }
+    @keyframes twinkle {
+      0%, 100% {opacity: 0.7;}
+      50% {opacity: 1;}
     }
     h1 {
-      color: #fff;
       font-size: 2.8em;
-      font-weight: 600;
-      margin-bottom: 34px;
-      letter-spacing: 2px;
-      text-shadow: 0 8px 28px #192044a0, 0 1.5px 5px #23a6d588;
-      background: linear-gradient(90deg, #23a6d5 0%, #a270d6 100%);
+      font-weight: 700;
+      margin-bottom: 36px;
+      letter-spacing: 3px;
+      text-align: center;
+      text-shadow:
+        0 3px 10px #3fa9f5cc,
+        0 0 20px #48a9f5cc;
+      background: linear-gradient(90deg, #3fa9f5, #55bbff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      z-index: 10;
+      position: relative;
     }
+    /* Countdown container styles with glassmorphism */
     .countdown-container {
       display: flex;
-      gap: 32px;
-      z-index: 20;
-      margin-bottom: 20px;
+      gap: 30px;
+      backdrop-filter: blur(13px) saturate(150%);
+      background: rgba(20, 30, 45, 0.35);
+      border-radius: 20px;
+      border: 1.8px solid rgba(255,255,255,0.12);
+      padding: 30px 40px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 10;
+      user-select: none;
     }
     .flip-unit {
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-width: 90px;
     }
     .label {
-      margin-top: 12px;
-      color: #aad1fa;
-      font-size: 1em;
-      font-weight: 500;
-      letter-spacing: 1px;
+      margin-top: 14px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 1.3px;
+      color: #99ccffdd;
       text-transform: uppercase;
-      text-shadow: 0 2px 8px #212763c0;
-      user-select: none;
+      text-shadow: 0 1px 4px #1b3450cc;
     }
     .flip-card {
       width: 90px;
-      height: 110px;
-      background: rgba(25, 28, 37, 0.18);
-      border-radius: 17px;
-      border: 2.5px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(9px) saturate(115%);
-      -webkit-backdrop-filter: blur(9px) saturate(115%);
-      box-shadow: 0 12px 64px 0 #1a1a2133, 0 1.5px 10px #23d5ab44;
-      overflow: hidden;
-      margin: 0 4px;
-      perspective: 500px;
+      height: 115px;
+      background: rgba(30, 40, 60, 0.25);
+      border-radius: 20px;
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px) saturate(140%);
+      -webkit-backdrop-filter: blur(10px) saturate(140%);
+      box-shadow: 0 14px 35px rgba(20, 40, 80, 0.35), 0 3px 11px #33abff77;
+      perspective: 520px;
       position: relative;
+      overflow: hidden;
     }
     .digit {
-      font-size: 3.4em;
+      font-size: 3.6em;
       font-weight: 700;
-      color: #fff;
+      color: #bbdefb;
+      text-shadow:
+        0 0 16px #55aaffbb,
+        0 3px 12px #1f405fcc;
       text-align: center;
-      text-shadow: 0 3px 12px #25264e88;
       user-select: none;
       letter-spacing: 2px;
+      position: relative;
+      z-index: 10;
     }
     .flip-inner {
       position: absolute;
       width: 100%;
       height: 100%;
-      transition: transform 0.6s cubic-bezier(.46, 1.56, .73, .95);
+      transition: transform 0.65s cubic-bezier(.46, 1.56, .73, .95);
       transform-style: preserve-3d;
+      top: 0;
+      left: 0;
+      z-index: 2;
     }
     .flip-front, .flip-back {
-      background: rgba(44, 51, 68, 0.31);
+      background: rgba(60, 80, 115, 0.28);
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       position: absolute;
-      font-size: 3.3em;
+      font-size: 3.5em;
       font-weight: 700;
-      color: #fff;
-      border-radius: 17px;
+      color: #d9eaffcc;
+      border-radius: 20px;
       backface-visibility: hidden;
-      text-shadow: 0 2px 14px #1380e07c;
-      box-shadow: 0 3px 17px #2cbcb088;
+      text-shadow:
+        0 2px 14px #1870ff9c;
+      box-shadow: 0 3px 26px #3fa9ff88;
+      filter: drop-shadow(0 0 8px #3fa9ffcc);
+      user-select: none;
     }
     .flip-front {
-      z-index: 2;
+      z-index: 5;
     }
     .flip-back {
       transform: rotateX(180deg);
-      z-index: 1;
+      z-index: 3;
     }
     .flip-animate {
-      animation: flip .7s cubic-bezier(.46, 1.56, .73, .95);
+      animation: flipRotate 0.65s cubic-bezier(.45, 1.3, .72, 1.15);
     }
-    @keyframes flip {
+    @keyframes flipRotate {
       0% { transform: rotateX(0deg); }
-      60% { transform: rotateX(-90deg);}
-      100% { transform: rotateX(-180deg);}
+      60% { transform: rotateX(-90deg); }
+      100% { transform: rotateX(-180deg); }
     }
-    /* Responsive design */
+    /* Responsive adjustments */
     @media (max-width: 700px) {
-      h1 { font-size: 1.3em; }
-      .countdown-container { gap: 10px; }
-      .flip-card { width: 54px; height: 68px; }
-      .flip-front, .flip-back { font-size: 2em; }
-      .label { font-size: 0.7em; }
+      h1 {
+        font-size: 1.8em;
+      }
+      .countdown-container {
+        gap: 15px;
+        padding: 20px 20px;
+      }
+      .flip-unit {
+        min-width: 60px;
+      }
+      .flip-card {
+        width: 60px;
+        height: 82px;
+      }
+      .flip-front, .flip-back, .digit {
+        font-size: 2.3em;
+      }
+      .label {
+        font-size: 0.7rem;
+      }
+    }
+    /* --- Animated scene background styling --- */
+    .scene {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, #0a1622 0%, #04070b 80%);
+    }
+    .ground {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 70px;
+      background: linear-gradient(170deg, #1b2750 0%, #131e40 100%);
+      box-shadow: inset 0 10px 15px rgba(255,255,255,0.1);
+    }
+    /* Train - stylized with chimney and smoke */
+    .train-svg {
+      position: absolute;
+      left: -320px;
+      bottom: 14px;
+      width: 370px;
+      height: 65px;
+      fill: none;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      animation: trainMove 9s linear infinite;
+      filter: drop-shadow(0 0 6px #3fa9ffcc);
+      opacity: 0.9;
+      z-index: 4;
+    }
+    @keyframes trainMove {
+      0% { left: -350px; }
+      100% { left: 110vw; }
+    }
+    /* Plane SVG style */
+    .plane-svg {
+      position: absolute;
+      top: 50px;
+      left: -140px;
+      width: 180px;
+      height: 70px;
+      animation: planeFly 15s linear infinite;
+      opacity: 0.95;
+      filter: drop-shadow(0 0 8px #55aaffcc);
+      z-index: 5;
+    }
+    @keyframes planeFly {
+      0% { left: -180px; top: 70px; }
+      50% { left: 50vw; top: 30px; }
+      100% { left: 110vw; top: 65px; opacity: 0; }
+    }
+    /* Smoke effect - small translucent circles rising */
+    .smoke {
+      position: absolute;
+      bottom: 70px;
+      left: 40px;
+      width: 12px;
+      height: 12px;
+      background: rgba(230, 230, 230, 0.15);
+      border-radius: 50%;
+      filter: blur(4px);
+      animation: smokeRise 3s linear infinite;
+      box-shadow: 12px 0 rgba(230, 230, 230, 0.12), 25px 5px rgba(230, 230, 230, 0.1);
+    }
+    @keyframes smokeRise {
+      0% { transform: translateY(0) scale(0.5); opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-60px) scale(1.1); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <h1>Hyderabad Trip is On </h1>
-  <h1>⏳Countdown begins⏳</h1>
+  <div class="stars"></div>
+  <div class="scene">
+    <div class="ground"></div>
+    <div class="smoke"></div>
+    <svg class="train-svg" viewBox="0 0 320 65" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <!-- Base train body -->
+      <rect x="20" y="25" width="140" height="30" rx="8" ry="8" fill="#2a2f5e"/>
+      <rect x="65" y="15" width="50" height="20" rx="6" ry="6" fill="#58a4ff"/>
+      <rect x="120" y="30" width="40" height="15" rx="5" ry="5" fill="#90bfff"/>
+      <!-- Wheels -->
+      <circle cx="50" cy="57" r="7" fill="#12161d" stroke="#2e385b" stroke-width="1.7"/>
+      <circle cx="110" cy="57" r="7" fill="#12161d" stroke="#2e385b" stroke-width="1.7"/>
+      <circle cx="150" cy="57" r="7" fill="#323d71" stroke="#404880" stroke-width="1.7"/>
+      <!-- Chimney -->
+      <rect x="28" y="12" width="18" height="13" rx="5" ry="5" fill="#34a3ff"/>
+    </svg>
+    <svg class="plane-svg" viewBox="0 0 200 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <g>
+        <rect x="70" y="32" width="80" height="16" rx="8" ry="8" fill="#ffffffcc" />
+        <polygon points="138,40 167,30 138,53" fill="#84b1ff" />
+        <rect x="114" y="37" width="20" height="8" rx="4" ry="4" fill="#1e2e65" />
+        <circle cx="170" cy="40" r="6" fill="#7499ff"/>
+      </g>
+    </svg>
+  </div>
+  <h1>Hyderabad Trip Countdown</h1>
   <div class="countdown-container" id="flip-countdown"></div>
   <script>
     // ------ CONFIG -------
-    const targetDate = new Date("2025-08-13T00:00:00"); // countdown target
-
+    const targetDate = new Date("2025-08-13T00:00:00");
     const labels = ["Days", "Hours", "Minutes", "Seconds"];
     const container = document.getElementById('flip-countdown');
     const units = [];
-
     function createFlipUnit(label) {
       const unit = document.createElement('div');
       unit.className = 'flip-unit';
@@ -137,7 +323,6 @@
       flipCard.className = 'flip-card';
       const flipInner = document.createElement('div');
       flipInner.className = 'flip-inner';
-      // Top and bottom display faces
       const flipFront = document.createElement('div');
       flipFront.className = 'flip-front digit';
       const flipBack = document.createElement('div');
@@ -153,39 +338,32 @@
       container.appendChild(unit);
       return {flipCard, flipInner, flipFront, flipBack};
     }
-
-    // Initialize flip units
     labels.forEach(lbl => {
       units.push(createFlipUnit(lbl));
     });
-
-    let prev = ["--","--","--","--"];
-
+    let prev = ["--", "--", "--", "--"];
     function flipTo(unit, newVal, idx) {
-      if(prev[idx] === newVal) return;
+      if (prev[idx] === newVal) return;
       unit.flipBack.textContent = newVal;
       unit.flipInner.classList.add('flip-animate');
-
-      // Animation timing for the number swap
       setTimeout(() => {
         unit.flipFront.textContent = newVal;
         unit.flipInner.classList.remove('flip-animate');
-      }, 620);
+      }, 650);
     }
-
     function updateCountdown() {
       const now = new Date();
       let diff = targetDate - now;
-      if(diff < 0) diff = 0;
+      if (diff < 0) diff = 0;
       const d = Math.floor(diff / (1000 * 60 * 60 * 24));
       const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const m = Math.floor((diff / (1000 * 60)) % 60);
       const s = Math.floor((diff / 1000) % 60);
       const vals = [
-        d.toString().padStart(2,'0'),
-        h.toString().padStart(2,'0'),
-        m.toString().padStart(2,'0'),
-        s.toString().padStart(2,'0')
+        d.toString().padStart(2, '0'),
+        h.toString().padStart(2, '0'),
+        m.toString().padStart(2, '0'),
+        s.toString().padStart(2, '0')
       ];
       vals.forEach((val, i) => {
         flipTo(units[i], val, i);
@@ -197,3 +375,4 @@
   </script>
 </body>
 </html>
+a
